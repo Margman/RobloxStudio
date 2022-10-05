@@ -1,0 +1,22 @@
+script.Parent.MouseClick:Connect(function(plr)
+		if (plr.Character:FindFirstChild("HumanoidRootPart").Position - script.Parent.Parent.Position).magnitude <= script.Parent.MaxActivationDistance then
+		if script.Parent.Parent.Time.Value == 0 and script.Parent.Parent.Robbed.Value == false then 
+			script.Parent.Parent.Robbed.Value = true
+			print("Dropping cash!")
+		end
+	end
+end)
+
+script.Parent.Parent.Robbed:GetPropertyChangedSignal("Value"):Connect(function()
+	    if script.Parent.Parent.Robbed.Value == true then 
+		script.Parent.Parent.Time.Value = 360 
+		end 
+end)
+
+while wait() do 
+	if script.Parent.Parent.Time.Value > 0.001 then
+		script.Parent.Parent.Time.Value = script.Parent.Parent.Time.Value - 0.1
+	else 
+		script.Parent.Parent.Robbed.Value = false 
+	end
+end
