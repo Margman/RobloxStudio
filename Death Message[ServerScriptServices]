@@ -1,0 +1,44 @@
+-- create script with name "On Death message"
+local Death = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local DeathMesage = Instance.new("TextLabel")
+Death.Name = "Death"
+Death.Parent = game.ServerScriptService["On Death message"]
+Death.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+Death.IgnoreGuiInset = true
+
+Frame.Parent = Death
+Frame.BackgroundColor3 = Color3.fromRGB(36, 36, 36)
+Frame.BackgroundTransparency = 0.280
+Frame.Size = UDim2.new(1, 0, 1, 0)
+
+DeathMesage.Name = "DeathMesage"
+DeathMesage.Parent = Frame
+DeathMesage.AnchorPoint = Vector2.new(0.5, 0.5)
+DeathMesage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+DeathMesage.BackgroundTransparency = 1.000
+DeathMesage.Position = UDim2.new(0.5, 0, 0.5, 0)
+DeathMesage.Size = UDim2.new(0, 1200, 0, 100)
+DeathMesage.Font = Enum.Font.Nunito
+DeathMesage.Text = "Died Text"
+DeathMesage.TextColor3 = Color3.fromRGB(255, 255, 255)
+DeathMesage.TextScaled = true
+DeathMesage.TextSize = 14.000
+DeathMesage.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+DeathMesage.TextWrapped = true
+
+local DiedText = {"Looks like someone died..","Try better next Time!","Ehh?"} 
+
+game:GetService("Players").PlayerAdded:Connect(function(plr)
+	plr.CharacterAdded:Connect(function(char)
+
+		local hum:Humanoid = char.Humanoid
+
+		hum.Died:Connect(function()
+			local GUI = script.Death
+			GUI.Frame.DeathMesage.Text = DiedText[math.random(1, #DiedText)]
+			GUI:Clone().Parent = plr.PlayerGui
+		end)
+
+	end)
+end)
